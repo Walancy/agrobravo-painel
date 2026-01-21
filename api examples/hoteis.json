@@ -1,0 +1,267 @@
+{
+"name":
+"Padmasari Resort Hotel",
+"source":
+"Hotels.com",
+"source_icon":
+"https://www.gstatic.com/travel-hotels/branding/f358dd45-ebd1-4af8-988d-d53154b73975.png",
+"link":
+"https://www.google.com/aclk?sa=l&ai=DChsSEwiqyavtufmRAxXTNwgFHZY-LXUYACICCAEQAxoCbWQ&co=1&gclid=EAIaIQobChMIqsmr7bn5kQMV0zcIBR2WPi11EA0YAyABEgJWifD_BwE&cid=CAASuwHkaBqtlLTsq5hMRKdeF-kq05TBBmaOWX-dOkO9d_ej-W30g7rKY9L8Yn03Kxi8_nSa6M9bkeDqQQ5HKJ7odnSNLDRJ671RnXOBQh_EWHcVzRR5sMFBMuv04mEtkxfw_KHCzKVBaMduGp6fSkyqK4VBaWyToSXtHXYrK0JLJyE_2oU37heRRJWCKGmvnJZR8CKKspqsf7KdNVOMUUjtcAOpWAzmKSDmsbQ4Kdst5UNObpRJJbldOsHhuIQe&sig=AOD64_1JE8Le5w8HiAZ4HAGGYjUXoXoHOw&adurl=",
+"property_token":
+"CgoI3arF9KSYlpxiEAE",
+"serpapi_property_details_link":
+"https://serpapi.com/search.json?adults=2&check_in_date=2026-03-07&check_out_date=2026-03-12&children=0&currency=USD&engine=google_hotels&gl=us&hl=en&property_token=CgoI3arF9KSYlpxiEAE&q=Bali+Resorts",
+"gps_coordinates":
+{
+"latitude":
+-8.166716,
+"longitude":
+115.00902500000001
+},
+"hotel_class":
+3,
+"thumbnail":
+"https://lh4.googleusercontent.com/proxy/QUpbAVzOUr3YsW6VadChzDKrxI3KIHkFjWEXL5I6wd70k1a61IyweGlnPDN5le0e_FTkc3gvi4oIUWDfQUkfxltcvxmBOK3Tc41negP09EeC0-Zs0a9JvHbDBC9dwwWUBQqhl97GgacrxINYfpTZvsYZ2q9Q1w=w225-h150-k-no",
+"overall_rating":
+4.3,
+"reviews":
+785,
+"price":
+"$52",
+"extracted_price":
+52,
+"amenities":
+[
+"Beach access",
+"Pool",
+"Kid-friendly",
+"Restaurant",
+"Room service",
+"Airport shuttle",
+"Outdoor pool",
+"Free breakfast",
+"Air conditioning"
+]
+},
+
+
+
+{
+"type":
+"vacation rental",
+"name":
+"Le Sabot Ubud",
+"property_token":
+"ChoQ5YiTp-rKmO60ARoNL2cvMTFzc2djMTNqcRAC",
+"serpapi_property_details_link":
+"https://serpapi.com/search.json?adults=2&check_in_date=2026-03-07&check_out_date=2026-03-12&children=0&currency=USD&engine=google_hotels&gl=us&hl=en&property_token=ChoQ5YiTp-rKmO60ARoNL2cvMTFzc2djMTNqcRAC&q=Bali+Resorts",
+"gps_coordinates":
+{
+"latitude":
+-8.509249687194824,
+"longitude":
+115.25045776367188
+},
+"check_in_time":
+"3:00 PM",
+"check_out_time":
+"12:00 PM",
+"rate_per_night":
+{
+"lowest":
+"$91",
+"extracted_lowest":
+91,
+"before_taxes_fees":
+"$91",
+"extracted_before_taxes_fees":
+91
+},
+"total_rate":
+{
+"lowest":
+"$454",
+"extracted_lowest":
+454,
+"before_taxes_fees":
+"$454",
+"extracted_before_taxes_fees":
+454
+},
+"prices":
+[
+{
+"source":
+"Bluepillow.com",
+"logo":
+"https://www.gstatic.com/travel-hotels/branding/190ff319-d0fd-4c45-bfc8-bad6f5f395f2.png",
+"num_guests":
+2,
+"rate_per_night":
+{
+"lowest":
+"$91",
+"extracted_lowest":
+91
+},
+"free_cancellation":
+true,
+"free_cancellation_until_date":
+"Mar 1",
+"free_cancellation_until_time":
+"3:59 PM"
+}
+],
+"nearby_places":
+[
+{
+"name":
+"I Gusti Ngurah Rai International Airport",
+"transportations":
+[
+{
+"type":
+"Taxi",
+"duration":
+"1 hr 15 min"
+},
+{
+"type":
+"Public transport",
+"duration":
+"2 hr 35 min"
+}
+]
+}
+],
+"images":
+[
+{
+"thumbnail":
+"https://lh5.googleusercontent.com/proxy/dMgscVE-u9-2DwgMdjw3-VCr-Hp4YumakK2lvUYZ3atOhibvqgiOp16hVmqHMwgVENtbR5FQAB8aUeuuZ9g0za0AvuBzR0b9mySgDkyrN0iEe019NbZ15GOQzrw8qyBsoKY2V5-XEGnjM4PLA5IliyBkr_aY3A=s287-w287-h192-n-k-no-v1",
+"original_image":
+"https://i.travelapi.com/lodging/37000000/36160000/36156700/36156677/5f39a075_z.jpg"
+},
+{
+"thumbnail":
+"https://lh6.googleusercontent.com/proxy/TPUBNIykpiG--loLYs1PBP22PLVtE82Ss2B5Ad76AK04gieA3yiqI-UuQxIfROcT6zzx14a-CwKlTUrF1iOvAFONBTqGukizCznRSiIqg8qMTGCU0I3cg8pdvvUcjrr22ugDzDC_ulOzPWYFKyYBokPgr5eMuCY=s287-w287-h192-n-k-no-v1",
+"original_image":
+"https://p.fih.io/v2/nSr0o-3gbZN8o1xMecXCcG-BkDeQVo3k-wOeVogkTe7ajuFOX7O-WA8aRWhXz1jsToZif_TsA_xCWfhWRa0ZvYGAuXxwyU8DG1Khb7tXwRrkjHmOR4O-mQjvLqehoa22SzRX1rv_Jm-zITF4en3ketkYyx1j1dLbUfhlOgkNcIcn9PwNtk_AU2csbUk6dd9sGqAEVmr2qjQMPI095Pdv3pEtFPIxOxxOPC-YWoFEg4yXvyZQ3nG9m-EOZqnW2VoZLvhO30Ezy-jlq6VDaEuB2cO59smfYmZms_xpqqibRgZgF0t_WTSmaPY-DpE9Rgh64AZ_KQd1YCLQ6KTARXyTJbjVJju6qRET"
+},
+{
+"thumbnail":
+"https://lh4.googleusercontent.com/proxy/BPC6bC8HAE7QfoWgpTNrDk6ZqNKfaEVcoCeita1w6oe9gDRubYcVIWL-bDSme2HAM9AxUXLfiKzaG6qh7774DpkMQSIRYCiINQbVAokncI-3Ak-fjmUh3OJNeNyu3NTEFCt904fvEaycrJepe1beD9iXGS9jUg=s287-w287-h192-n-k-no-v1",
+"original_image":
+"https://p.fih.io/v2/nSr0o-3gbZN8o1xMecXCcG-BkDeQVo3k-wOeVogkTe7ajuFOX7O-WA8aRWhXz1jsToZif_TsA_xCWfhWRa0ZhJvslhwYynMfFjGqe7Ro-hn6-HjUPa_zhxDnE6ugtp2yPVNu8-75J13OfjF4en3ketkYyx1j1dLbUfhlOgkNcIcn9PwNtk_AU2csbUk6dd9sGqAEVmr2qjQMPI095Pdv3pEtFPIxOxxOPC-YWoFEg4yXvyZQ3nG9m-EOZqnW2VoZLvhO30Ezy-jlq6VDaEuB2cO59smfYmZms_xpqqibRgdxAxN7HDTQcL49eZE9Rgh64AZ_KQd1YCLYZCOSBLYx3EvpGYIVVoEv"
+},
+{
+"thumbnail":
+"https://lh5.googleusercontent.com/proxy/CmBquVC7kEFqBAeYM1w9kYVZ0HYIO44hB-zvO7_bUKQDqcD3t2wLdiW5ufn7l-GVhQNAAyxDiIxdwfy46iaC3pCnupelULyxMV2NeQjFgl00x2G6ybgM8dcP7rXCsXctsS3J8Sr1jphNRNd7MYNjqZY8K9C2LQ=s287-w287-h192-n-k-no-v1",
+"original_image":
+"https://p.fih.io/v2/nSr0o-3gbZN8o1xMecXCcG-BkDeQVo3k-wOeVogkTe7ajuFOX7O-WA8aRWhXz1jsToZif_TsA_xCWfhWRa0Z2KSuvBAisyMxExSBaLdFtgjStEPUBIyRnxb_HLbS_L_kIyxRz_DuBgPPfjF4en3ketkYyx1j1dLbUfhlOgkNcIcn9PwNtk_AU2csbUk6dd9sGqAEVmr2qjQMPI095Pdv3pEtFPIxOxxOPC-YWoFEg4yXvyZQ3nG9m-EOZqnW2VoZLvhO30Ezy-jlq6VDaEuB2cO59smfYmZms_xpqqibRgZhAxNjWyO2aL4qaZE9Rgh64AZ_KQd1YCJ92rzWG3_GELD0ipBNfZPb"
+},
+{
+"thumbnail":
+"https://lh6.googleusercontent.com/proxy/yUUEhGxR8ZMMjEA25v6Oor1Kp4ET0uKUCarcRnMXPX0XwPJvN3n2sZNjEhlhSkhEWa7k0txRLvSA7NaTirdKzyvR7pJfgGTHom1jxk2FbF1-VoOs52yIJCNr5_EHttbPOFV7-E9ZDxo0-1sfsRM2fnILBnGW6g=s287-w287-h192-n-k-no-v1",
+"original_image":
+"https://p.fih.io/v2/nSr0o-3gbZN8o1xMecXCcG-BkDeQVo3k-wOeVogkTe7ajuFOX7O-WA8aRWhXz1jsToZif_TsA_xCWfhWRa0Z3ruHpncF_14NDz6seJ976W6Z-UPqP6OOiQz8fqD8jo2kTAAW-bLcOkjqITF4en3ketkYyx1j1dLbUfhlOgkNcIcn9PwNtk_AU2csbUk6dd9sGqAEVmr2qjQMPI095Pdv3pEtFPIxOxxOPC-YWoFEg4yXvyZQ3nG9m-EOZqnW2VoZLvhO30Ezy-jlq6VDaEuB2cO59smfYmZms_xpqqibRgZjFy10ADe2c-A_aZE9Rgh64AZ_KQd1YCKnNAs5ozRFc7incq99Xaor"
+},
+{
+"thumbnail":
+"https://lh6.googleusercontent.com/proxy/FDhoPbl4bQr5ptxni_XjAFW7WAFz8G4sb-N4U5HWNVrl-jSpXz8CSGZJ2DBsCZGzl5GQfmcv3sue3UZxdlFsLHheq-N1oUJmoPGY5afyRX0Y1Tq2M9Wiar108Njesg-LmPs9gTM9Kmm15RZHkTt6ZuNjno0Qm2g=s287-w287-h192-n-k-no-v1",
+"original_image":
+"https://p.fih.io/v2/nSr0o-3gbZN8o1xMecXCcG-BkDeQVo3k-wOeVogkTe7ajuFOX7O-WA8aRWhXz1jsToZif_TsA_xCWfhWRa0ZhLiX7z0510YFLDCqWYcbtx3KliPNHJSBvDvyIp_zvoSKCi1y77zCB0vrAzF4en3ketkYyx1j1dLbUfhlOgkNcIcn9PwNtk_AU2csbUk6dd9sGqAEVmr2qjQMPI095Pdv3pEtFPIxOxxOPC-YWoFEg4yXvyZQ3nG9m-EOZqnW2VoZLvhO30Ezy-jlq6VDaEuB2cO59smfYmZms_xpqqibRgc5Fy5_EjW2Y-A-eZE9Rgh64AZ_KQd1YCIOSFJyJ9zDmFglEy8zC0NN"
+},
+{
+"thumbnail":
+"https://lh4.googleusercontent.com/proxy/6A-Z0cHLfGBAMxqus124Oxi5_OZL4JlQ-bVJN5uPiq1cgOwWJQNT9GhzQ1vzKfF3gw3OG0I_y4nV64QsEAAkcEacmtRKAaKndVBVO6WstHgSiC79YSlEJXE3xE0i_FyE1_WFt5gW4wHk_rh1Irjs_KrjcbfJiw=s287-w287-h192-n-k-no-v1",
+"original_image":
+"https://p.fih.io/v2/nSr0o-3gbZN8o1xMecXCcG-BkDeQVo3k-wOeVogkTe7ajuFOX7O-WA8aRWhXz1jsToZif_TsA_xCWfhWRa0ZrYeXjQJ2zF1iaTeRG5RO9R2Yon_LKOj9pRfGCoDBh-mbFR9eqKrOJ2P2KTF4en3ketkYyx1j1dLbUfhlOgkNcIcn9PwNtk_AU2csbUk6dd9sGqAEVmr2qjQMPI095Pdv3pEtFPIxOxxOPC-YWoFEg4yXvyZQ3nG9m-EOZqnW2VoZLvhO30Ezy-jlq6VDaEuB2cO59smfYmZms_xpqqibRgc7AC5_ESOIc-E_eZE9Rgh64AZ_KQd1YCKTWj-K--mAIA7zQn6WIR6T"
+},
+{
+"thumbnail":
+"https://lh3.googleusercontent.com/proxy/40dMPkjyAy3EalZ8tMySd73_mtc6ROpmGsgiawm8N14ws1meT0iNSjRSHdvsDjJydVusRKRHtvGmJyJa3ckohWExAxOLc9kSkhWH8e2Qh9dzf19rC1DSeeaf-L61S7Xi80xle9NCZLrQsJFko7v5Ry3HZgk55g=s287-w287-h192-n-k-no-v1",
+"original_image":
+"https://p.fih.io/v2/nSr0o-3gbZN8o1xMecXCcG-BkDeQVo3k-wOeVogkTe7ajuFOX7O-WA8aRWhXz1jsToZif_TsA_xCWfhWRa0Zp4ftvCUSxE4VczSSac966C3kjkD8T6qSiRHecKvbuIqxGgpq9-q3Ug_HBzF4en3ketkYyx1j1dLbUfhlOgkNcIcn9PwNtk_AU2csbUk6dd9sGqAEVmr2qjQMPI095Pdv3pEtFPIxOxxOPC-YWoFEg4yXvyZQ3nG9m-EOZqnW2VoZLvhO30Ezy-jlq6VDaEuB2cO59smfYmZms_xpqqibRgdxAy53XjeIVeY-aZE9Rgh64AZ_KQd1YCJop2pD3WRl-ADhTpusCyg3"
+},
+{
+"thumbnail":
+"https://lh6.googleusercontent.com/proxy/eTNs-6G8rAncWlYHioJUz5EWA4dgK5u-LLs_ksKS37BGmodEJ4HcXjxGJUo8k0QhK5dlBH25Va1KjNhUUqEyW8z7FKlmQ8eBVgXn06Deuj3dIUV8uyPJl6CIWEcf-UMw8Uxv2Tp6FTd6HQg5D_M91VMRZlTsnA=s287-w287-h192-n-k-no-v1",
+"original_image":
+"https://p.fih.io/v2/nSr0o-3gbZN8o1xMecXCcG-BkDeQVo3k-wOeVogkTe7ajuFOX7O-WA8aRWhXz1jsToZif_TsA_xCWfhWRa0Zh4KYnyENvn88azDSXYNX4C3Pr3f9Ouy5mwPiFZCn9ounMy5l-o7ONlHffjF4en3ketkYyx1j1dLbUfhlOgkNcIcn9PwNtk_AU2csbUk6dd9sGqAEVmr2qjQMPI095Pdv3pEtFPIxOxxOPC-YWoFEg4yXvyZQ3nG9m-EOZqnW2VoZLvhO30Ezy-jlq6VDaEuB2cO59smfYmZms_xpqqibRgc8Fy1WByCIXr8pU5E9Rgh64AZ_KQd1YCJ7iQA7P7uvVdPVdAdt2YvV"
+}
+],
+"overall_rating":
+4.4355693,
+"reviews":
+123,
+"location_rating":
+4,
+"amenities":
+[
+"Air conditioning",
+"Kid-friendly",
+"Crib",
+"Kitchen",
+"Outdoor pool",
+"Smoke-free",
+"Free parking",
+"Free Wi-Fi"
+],
+"excluded_amenities":
+[
+"No airport shuttle",
+"No beach access",
+"No elevator",
+"No fireplace",
+"No fitness center",
+"No hot tub",
+"No indoor pool",
+"No microwave",
+"Not pet-friendly",
+"No cable TV",
+"Not wheelchair accessible"
+],
+"health_and_safety":
+{
+"groups":
+[
+{
+"title":
+"Enhanced cleaning",
+"list":
+[
+{
+"title":
+"Disinfectant used to clean the property",
+"available":
+true
+}
+]
+},
+{
+"title":
+"Minimized contact",
+"list":
+[
+{
+"title":
+"No-contact check-in and check-out",
+"available":
+true
+}
+]
+}
+]
+},
+"essential_info":
+[
+"Entire villa",
+"Sleeps 10",
+"9 bedrooms",
+"7 bathrooms",
+"11 beds"
+],
+"serpapi_google_hotels_reviews_link":
+"https://serpapi.com/search.json?engine=google_hotels_reviews&hl=en&property_token=ChoQ5YiTp-rKmO60ARoNL2cvMTFzc2djMTNqcRAC"
+},

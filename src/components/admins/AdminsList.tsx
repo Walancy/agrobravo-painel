@@ -1,0 +1,199 @@
+"use client"
+
+import * as React from "react"
+import { Eye, Trash2, Search, Plus, Pencil } from "lucide-react"
+import { ColumnDef } from "@tanstack/react-table"
+
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
+import { DataTable } from "@/components/ui/data-table"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+
+type Admin = {
+    id: number
+    name: string
+    email: string
+    accessLevel: string
+    createdAt: string
+    createdBy: string
+    status: string
+}
+
+const admins: Admin[] = [
+    {
+        id: 1,
+        name: "Marcelo Silveira",
+        email: "marscelo@gmail.com",
+        accessLevel: "Todas as permissões",
+        createdAt: "25/07/2025",
+        createdBy: "Luiz Augusto",
+        status: "Ativo",
+    },
+    {
+        id: 2,
+        name: "Renato Costa",
+        email: "renato.costa@gmail.com",
+        accessLevel: "Master",
+        createdAt: "15/08/2024",
+        createdBy: "Ana Paula",
+        status: "Ativo",
+    },
+    {
+        id: 3,
+        name: "Claudia Martins",
+        email: "claudia.martins@gmail.com",
+        accessLevel: "Nenhuma permissão",
+        createdAt: "30/09/2023",
+        createdBy: "Fernando Lima",
+        status: "Inativo",
+    },
+    {
+        id: 4,
+        name: "Giovanni Ribeiro",
+        email: "giovanni.ribeiro@gmail.com",
+        accessLevel: "Todas as permissões",
+        createdAt: "22/11/2025",
+        createdBy: "Mariana Souza",
+        status: "Ativo",
+    },
+    {
+        id: 5,
+        name: "Fernanda Torres",
+        email: "fernanda.torres@gmail.com",
+        accessLevel: "Permissão limitada",
+        createdAt: "05/01/2023",
+        createdBy: "Bruno Alves",
+        status: "Ativo",
+    },
+]
+
+export function AdminsList() {
+    const [currentPage, setCurrentPage] = React.useState(1)
+    const itemsPerPage = 5
+
+    const totalPages = Math.ceil(admins.length / itemsPerPage)
+    const currentAdmins = admins.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+
+    const columns: ColumnDef<Admin>[] = [
+        {
+            accessorKey: "name",
+            header: "Nome",
+            cell: ({ row }) => (
+                <div className="flex items-center gap-3 pl-2">
+                    <Avatar className="h-8 w-8">
+                        <AvatarImage src="https://github.com/shadcn.png" alt={row.getValue("name")} />
+                        <AvatarFallback>{row.original.name.substring(0, 2)}</AvatarFallback>
+                    </Avatar>
+                    <span className="font-semibold text-gray-900">{row.getValue("name")}</span>
+                </div>
+            ),
+        },
+        {
+            accessorKey: "email",
+            header: "E-mail",
+            cell: ({ row }) => <span className="text-gray-900 font-medium">{row.getValue("email")}</span>,
+        },
+        {
+            accessorKey: "accessLevel",
+            header: "Nível de acesso",
+            cell: ({ row }) => <span className="text-gray-900 font-medium">{row.getValue("accessLevel")}</span>,
+        },
+        {
+            accessorKey: "createdAt",
+            header: "Criado em",
+            cell: ({ row }) => <span className="text-gray-900 font-medium">{row.getValue("createdAt")}</span>,
+        },
+        {
+            accessorKey: "createdBy",
+            header: "Criado por",
+            cell: ({ row }) => <span className="text-gray-900 font-medium">{row.getValue("createdBy")}</span>,
+        },
+        {
+            accessorKey: "status",
+            header: ({ column }) => <div className="text-center">Status</div>,
+            cell: ({ row }) => {
+                const status = row.getValue("status") as string
+                return (
+                    <div className="text-center">
+                        <Badge
+                            variant="secondary"
+                            className={cn(
+                                "font-medium rounded-full px-4 py-1 text-xs border-none shadow-none",
+                                status === "Ativo" && "bg-green-100 text-green-600",
+                                status === "Inativo" && "bg-red-100 text-red-600"
+                            )}
+                        >
+                            {status}
+                        </Badge>
+                    </div>
+                )
+            },
+        },
+        {
+            id: "actions",
+            header: ({ column }) => <div className="text-right pr-4">Ações</div>,
+            cell: ({ row }) => {
+                return (
+                    <div className="flex justify-end gap-1 pr-2">
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full">
+                            <Eye className="h-4 w-4" />
+                        </Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-full">
+                            <Pencil className="h-4 w-4" />
+                        </Button>
+                        <Button variant="ghost" size="icon" className="h-8 w-8 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-full">
+                            <Trash2 className="h-4 w-4" />
+                        </Button>
+                    </div>
+                )
+            },
+        },
+    ]
+
+    return (
+        <div className="flex flex-col h-full space-y-6 bg-white p-6 rounded-xl">
+            {/* Filters Bar */}
+            <div className="flex flex-col xl:flex-row gap-6 items-end justify-between shrink-0">
+                <div className="relative flex-1 w-full">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                        type="search"
+                        placeholder="Pesquisar"
+                        className="pl-10 h-12 bg-transparent rounded-2xl border-gray-200 w-full text-base shadow-none"
+                    />
+                </div>
+
+                <Button className="h-12 px-6 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-normal text-base">
+                    Novo colaborador <Plus className="ml-2 h-5 w-5" />
+                </Button>
+            </div>
+
+            {/* Table */}
+            <div className="flex-1 overflow-hidden">
+                <DataTable columns={columns} data={currentAdmins} />
+            </div>
+
+            {/* Pagination */}
+            <div className="flex justify-end items-center gap-2 pt-4 shrink-0">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <Button
+                        key={page}
+                        variant="outline"
+                        size="icon"
+                        className={cn(
+                            "h-7 w-7 rounded-lg text-xs font-medium transition-colors shadow-none",
+                            currentPage === page
+                                ? "border border-blue-600 text-blue-600 bg-white hover:bg-blue-50"
+                                : "border-none bg-transparent text-gray-500 hover:bg-gray-100 hover:text-gray-900"
+                        )}
+                        onClick={() => setCurrentPage(page)}
+                    >
+                        {page}
+                    </Button>
+                ))}
+            </div>
+        </div>
+    )
+}

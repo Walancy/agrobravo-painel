@@ -1,0 +1,67 @@
+{
+  "local_results": [
+    {
+      "position": 1,
+      "title": "Houndstooth Coffee",
+      "rating": 4.6,
+      "reviews_original": "(862)",
+      "reviews": 862,
+      "price": "$$",
+      "type": "Coffee shop",
+      "address": "401 Congress Ave. #100c · In Frost Bank Tower",
+      "description": "Cozy hangout for carefully sourced brews",
+      "place_id": "11265938073076301333",
+      "place_id_search": "https://serpapi.com/search.json?device=desktop&engine=google_local&gl=us&google_domain=google.com&hl=en&location=Austin%2C+Texas%2C+United+States&ludocid=11265938073076301333&q=Coffee",
+      "lsig": "AB86z5Vdw6C2pJpM0xQ6JUx2KONU",
+      "thumbnail": "https://serpapi.com/searches/681e4eb46561a61ae0b589f9/images/58d3a72772104aff9720686c6275d06c7df8b6bd0aa32a6a53dbe90263e7d27e.jpeg",
+      "serpapi_thumbnail": "https://serpapi.com/searches/681e4eb46561a61ae0b589f9/images/58d3a72772104affd799905109bf5cee17f3ee713c1adeea6caa13b97d12ca60.jpeg",
+      "gps_coordinates": {
+        "latitude": 30.266398999999996,
+        "longitude": -97.742779
+      }
+    },
+    {
+      "position": 2,
+      "title": "Progress Coffee",
+      "rating": 5,
+      "reviews_original": "(4)",
+      "reviews": 4,
+      "type": "Coffee shop",
+      "address": "515 Congress Ave. · In the Bank of America Financial Center",
+      "place_id": "1973998765368382603",
+      "place_id_search": "https://serpapi.com/search.json?device=desktop&engine=google_local&gl=us&google_domain=google.com&hl=en&location=Austin%2C+Texas%2C+United+States&ludocid=1973998765368382603&q=Coffee",
+      "lsig": "AB86z5UihdVRxPqHoVsdxHlX9u_z",
+      "thumbnail": "https://serpapi.com/searches/681e4eb46561a61ae0b589f9/images/58d3a72772104affc0e035790c7a4ff31be0c007afc96f5f19fc7b31bc74d056.jpeg",
+      "serpapi_thumbnail": "https://serpapi.com/searches/681e4eb46561a61ae0b589f9/images/58d3a72772104affe8aeaefa8f7d229867d19dea89a58283747f1a00b0acce66.jpeg",
+      "gps_coordinates": {
+        "latitude": 30.267741599999997,
+        "longitude": -97.74260389999999
+      },
+      "service_options": {
+        "dine_in": true,
+        "takeout": true
+      }
+    },
+    {
+      "position": 3,
+      "title": "Starbucks",
+      "rating": 4.3,
+      "reviews_original": "(488)",
+      "reviews": 488,
+      "price": "$$",
+      "type": "Coffee shop",
+      "address": "301 W 3rd St",
+      "description": "Iconic Seattle-based coffeehouse chain",
+      "place_id": "14343056409938523336",
+      "place_id_search": "https://serpapi.com/search.json?device=desktop&engine=google_local&gl=us&google_domain=google.com&hl=en&location=Austin%2C+Texas%2C+United+States&ludocid=14343056409938523336&q=Coffee",
+      "lsig": "AB86z5VlzJFxycG7xUXBLf12UDjN",
+      "thumbnail": "https://serpapi.com/searches/681e4eb46561a61ae0b589f9/images/58d3a72772104aff2cc63f47a5551e6a519026c717ab28c752662351bb0b87b2.jpeg",
+      "serpapi_thumbnail": "https://serpapi.com/searches/681e4eb46561a61ae0b589f9/images/58d3a72772104afff3e3c3132a0cfbee99af34a7d56fa7058d59e89de2a46e24.jpeg",
+      "gps_coordinates": {
+        "latitude": 30.265863000000003,
+        "longitude": -97.74649199999999
+      }
+    },
+    ...
+  ]
+}
