@@ -10,6 +10,22 @@ export type Collaborator = {
     photo?: string | null
 }
 
+export type CollaboratorFormData = {
+    name: string
+    email: string
+    document: string
+    phone: string
+    permissoes: string[]
+    city: string
+    state: string
+    cep: string
+    street: string
+    neighborhood: string
+    number: string
+    complement: string
+    photo?: string | null
+}
+
 export const collaboratorsService = {
     getAllCollaborators: async () => {
         const response = await fetch('/api/collaborators');
@@ -18,19 +34,10 @@ export const collaboratorsService = {
         return data as Collaborator[];
     },
 
-    getCollaboratorById: async (id: string) => {
+    getCollaboratorById: async (id: string): Promise<CollaboratorFormData> => {
         const response = await fetch(`/api/collaborators/${id}`);
         if (!response.ok) throw new Error('Failed to fetch collaborator');
         const data = await response.json();
-
-        // Map backend permissions to frontend accessLevel
-        let accessLevel = 'viewer';
-        const perms = data.permissoes || [];
-        if (perms.includes('TODAS_AS_PERMISSOES')) {
-            accessLevel = 'admin';
-        } else if (perms.includes('GERENCIAR_USUARIOS') || perms.includes('EDITAR_MISSOES')) {
-            accessLevel = 'manager';
-        }
 
         // Map backend response to Frontend form structure
         return {
@@ -38,7 +45,7 @@ export const collaboratorsService = {
             email: data.email || '',
             document: data.cpf || '',
             phone: data.telefone || '',
-            accessLevel: accessLevel,
+            permissoes: data.permissoes || [],
             city: data.cidade || '',
             state: data.estado || '',
             cep: data.cep || '',
@@ -50,7 +57,7 @@ export const collaboratorsService = {
         };
     },
 
-    createCollaborator: async (data: any) => {
+    createCollaborator: async (data: CollaboratorFormData) => {
         const response = await fetch('/api/collaborators', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -63,7 +70,7 @@ export const collaboratorsService = {
         return response.json();
     },
 
-    updateCollaborator: async (id: string, data: any) => {
+    updateCollaborator: async (id: string, data: CollaboratorFormData) => {
         const response = await fetch(`/api/collaborators/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },

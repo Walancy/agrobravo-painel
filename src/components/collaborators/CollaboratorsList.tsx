@@ -14,7 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { collaboratorsService, Collaborator } from "@/services/collaboratorsService"
 import { useUserPermissions } from "@/hooks/useUserPermissions"
 import { toast } from "sonner"
-import { PermissionsModal } from "./PermissionsModal"
+
 
 export function CollaboratorsList() {
     const router = useRouter()
@@ -74,9 +74,40 @@ export function CollaboratorsList() {
             cell: ({ row }) => <span className="text-gray-900 font-medium">{row.getValue("email")}</span>,
         },
         {
-            accessorKey: "accessLevel",
-            header: "Nível de acesso",
-            cell: ({ row }) => <span className="text-gray-900 font-medium">{row.getValue("accessLevel")}</span>,
+            accessorKey: "permissoes",
+            header: "Permissões",
+            cell: ({ row }) => {
+                const permissions = (row.getValue("permissoes") as string[]) || []
+
+                if (permissions.includes("TODAS_AS_PERMISSOES")) {
+                    return <Badge variant="secondary" className="bg-blue-100 text-blue-700 hover:bg-blue-100">Admin</Badge>
+                }
+
+                if (permissions.length === 0) {
+                    return <span className="text-gray-500 text-sm">Sem permissões</span>
+                }
+
+                return (
+                    <div className="flex flex-wrap gap-1">
+                        {permissions.slice(0, 2).map((perm) => {
+                            let label = perm
+                            if (perm === "GERENCIAR_USUARIOS") label = "Gerenciar usuários"
+                            if (perm === "EDITAR_MISSOES") label = "Editar missões"
+                            if (perm === "EDITAR_FORNECEDORES") label = "Editar fornecedores"
+                            return (
+                                <Badge key={perm} variant="outline" className="text-[10px] px-1 bg-gray-50 text-gray-700 border-gray-200">
+                                    {label}
+                                </Badge>
+                            )
+                        })}
+                        {permissions.length > 2 && (
+                            <Badge variant="outline" className="text-[10px] px-1 bg-gray-50 text-gray-700 border-gray-200">
+                                +{permissions.length - 2}
+                            </Badge>
+                        )}
+                    </div>
+                )
+            },
         },
         {
             accessorKey: "createdAt",
@@ -90,7 +121,7 @@ export function CollaboratorsList() {
         },
         {
             accessorKey: "status",
-            header: ({ column }) => <div className="text-center">Status</div>,
+            header: () => <div className="text-center">Status</div>,
             cell: ({ row }) => {
                 const status = row.getValue("status") as string
                 return (
@@ -111,7 +142,7 @@ export function CollaboratorsList() {
         },
         {
             id: "actions",
-            header: ({ column }) => <div className="text-right pr-4">Ações</div>,
+            header: () => <div className="text-right pr-4">Ações</div>,
             cell: ({ row }) => {
                 return (
                     <div className="flex justify-end gap-1 pr-2">
@@ -165,7 +196,6 @@ export function CollaboratorsList() {
                     </Button>
 
                     <div className="flex gap-3">
-                        <PermissionsModal />
                         <Button
                             onClick={() => {
                                 if (hasPermission('GERENCIAR_USUARIOS')) {

@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { createClient } from "@/lib/supabase/client"
 import { AuthLayout } from "@/components/auth/AuthLayout"
 import { Button } from "@/components/ui/button"
@@ -12,11 +12,28 @@ import Link from "next/link"
 
 export default function LoginPage() {
     const router = useRouter()
+    const searchParams = useSearchParams()
     const supabase = createClient()
     const [isLoading, setIsLoading] = React.useState(false)
     const [error, setError] = React.useState<string | null>(null)
 
     const [showPassword, setShowPassword] = React.useState(false)
+
+    React.useEffect(() => {
+        const errorDescription = searchParams.get("error_description")
+        const errorCode = searchParams.get("error_code")
+
+        if (errorDescription) {
+            // Decodifica a URL para ler a mensagem corretamente
+            const decodedError = decodeURIComponent(errorDescription.replace(/\+/g, " "))
+
+            if (errorCode === "otp_expired") {
+                setError("O link de recuperação expirou ou já foi utilizado. Por favor, solicite um novo.")
+            } else {
+                setError(decodedError)
+            }
+        }
+    }, [searchParams])
 
     async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()

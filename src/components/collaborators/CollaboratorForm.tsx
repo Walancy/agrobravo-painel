@@ -2,7 +2,8 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { X, Save, Upload, Loader2 } from "lucide-react"
+import Image from "next/image"
+import { X, Save, Upload, Loader2, Check, ChevronsUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -13,7 +14,21 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { collaboratorsService } from "@/services/collaboratorsService"
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from "@/components/ui/command"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
+import { Badge } from "@/components/ui/badge"
+import { collaboratorsService, CollaboratorFormData } from "@/services/collaboratorsService"
 import { maskCPF, maskPhone, maskCEP, validateEmail } from "@/lib/form-utils"
 import { cn } from "@/lib/utils"
 
@@ -23,6 +38,13 @@ import { toast } from "sonner"
 interface CollaboratorFormProps {
     collaboratorId?: string
 }
+
+const PERMISSIONS_OPTIONS = [
+    { value: "TODAS_AS_PERMISSOES", label: "Admin" },
+    { value: "GERENCIAR_USUARIOS", label: "Gerenciar usuários" },
+    { value: "EDITAR_MISSOES", label: "Editar missões" },
+    { value: "EDITAR_FORNECEDORES", label: "Editar fornecedores" },
+]
 
 export function CollaboratorForm({ collaboratorId }: CollaboratorFormProps) {
     const router = useRouter()
@@ -41,12 +63,12 @@ export function CollaboratorForm({ collaboratorId }: CollaboratorFormProps) {
     const [isFetching, setIsFetching] = React.useState(!!collaboratorId)
     const [errors, setErrors] = React.useState<Record<string, string>>({})
 
-    const [formData, setFormData] = React.useState({
+    const [formData, setFormData] = React.useState<CollaboratorFormData>({
         name: '',
         email: '',
         document: '',
         phone: '',
-        accessLevel: '',
+        permissoes: [],
         city: '',
         state: '',
         cep: '',
@@ -82,11 +104,6 @@ export function CollaboratorForm({ collaboratorId }: CollaboratorFormProps) {
 
             // If editing, don't check if it's the same email
             if (collaboratorId) {
-                // We would need the original email here to be perfect, 
-                // but let's assume if it's valid and we are editing, 
-                // we only show error if it's different from what was loaded.
-                // For now, let's just do the check and the user can ignore if it's their own.
-                // Better: only check if it's a new collaborator for now to avoid confusion.
                 return
             }
 
@@ -140,7 +157,7 @@ export function CollaboratorForm({ collaboratorId }: CollaboratorFormProps) {
         if (!formData.document.trim()) newErrors.document = "CPF é obrigatório"
         if (formData.document.replace(/\D/g, '').length !== 11) newErrors.document = "CPF incompleto"
         if (!formData.phone.trim()) newErrors.phone = "Telefone é obrigatório"
-        if (!formData.accessLevel) newErrors.accessLevel = "Nível de acesso é obrigatório"
+        if (!formData.permissoes || formData.permissoes.length === 0) newErrors.permissoes = "Selecione pelo menos uma permissão"
 
         // Address validation
         if (!formData.city) newErrors.city = "Cidade é obrigatória"
@@ -159,6 +176,39 @@ export function CollaboratorForm({ collaboratorId }: CollaboratorFormProps) {
             setErrors(prev => {
                 const newErrors = { ...prev }
                 delete newErrors[id]
+                return newErrors
+            })
+        }
+    }
+
+    const handlePermissionToggle = (value: string) => {
+        let newPermissions = [...formData.permissoes]
+
+        if (value === "TODAS_AS_PERMISSOES") {
+            if (newPermissions.includes("TODAS_AS_PERMISSOES")) {
+                newPermissions = []
+            } else {
+                newPermissions = ["TODAS_AS_PERMISSOES"]
+            }
+        } else {
+            if (newPermissions.includes("TODAS_AS_PERMISSOES")) {
+                // Do nothing if admin is selected (disabled state)
+                return
+            }
+
+            if (newPermissions.includes(value)) {
+                newPermissions = newPermissions.filter(p => p !== value)
+            } else {
+                newPermissions.push(value)
+            }
+        }
+
+        setFormData(prev => ({ ...prev, permissoes: newPermissions }))
+
+        if (errors.permissoes) {
+            setErrors(prev => {
+                const newErrors = { ...prev }
+                delete newErrors.permissoes
                 return newErrors
             })
         }
@@ -282,21 +332,71 @@ export function CollaboratorForm({ collaboratorId }: CollaboratorFormProps) {
                             {errors.phone && <span className="text-[10px] text-red-500 mt-1">{errors.phone}</span>}
                         </div>
                         <div className="lg:col-span-1">
-                            <Label htmlFor="accessLevel" className="text-xs text-gray-500 mb-1.5 block">Nível de acesso*</Label>
-                            <Select value={formData.accessLevel} onValueChange={(val) => handleSelectChange('accessLevel', val)}>
-                                <SelectTrigger className={cn(
-                                    "h-12 bg-gray-50 border-gray-200 rounded-xl",
-                                    errors.accessLevel && "border-red-500 focus-visible:ring-red-500"
-                                )}>
-                                    <SelectValue placeholder="Selecione" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="admin">Administrador</SelectItem>
-                                    <SelectItem value="manager">Gerenciar usuários, editar</SelectItem>
-                                    <SelectItem value="viewer">Visualizador</SelectItem>
-                                </SelectContent>
-                            </Select>
-                            {errors.accessLevel && <span className="text-[10px] text-red-500 mt-1">{errors.accessLevel}</span>}
+                            <Label htmlFor="permissoes" className="text-xs text-gray-500 mb-1.5 block">Permissões*</Label>
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <Button
+                                        variant="outline"
+                                        role="combobox"
+                                        className={cn(
+                                            "w-full h-12 bg-gray-50 border-gray-200 rounded-xl justify-between hover:bg-gray-100",
+                                            (!formData.permissoes || formData.permissoes.length === 0) && "text-muted-foreground",
+                                            errors.permissoes && "border-red-500 text-red-500"
+                                        )}
+                                    >
+                                        {formData.permissoes && formData.permissoes.length > 0 ? (
+                                            <div className="flex gap-1 overflow-hidden">
+                                                {formData.permissoes.includes("TODAS_AS_PERMISSOES")
+                                                    ? <Badge variant="secondary" className="mr-1 bg-blue-100 text-blue-700 hover:bg-blue-100">Admin</Badge>
+                                                    : formData.permissoes.length <= 2
+                                                        ? formData.permissoes.map(p => {
+                                                            const opt = PERMISSIONS_OPTIONS.find(o => o.value === p)
+                                                            return <Badge key={p} variant="secondary" className="mr-1 text-[10px] px-1">{opt?.label}</Badge>
+                                                        })
+                                                        : <span className="text-xs text-black">{formData.permissoes.length} selecionados</span>
+                                                }
+                                            </div>
+                                        ) : (
+                                            "Selecione"
+                                        )}
+                                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-[300px] p-0" align="start">
+                                    <Command>
+                                        <CommandInput placeholder="Buscar permissão..." />
+                                        <CommandList>
+                                            <CommandEmpty>Nenhuma permissão encontrada.</CommandEmpty>
+                                            <CommandGroup>
+                                                {PERMISSIONS_OPTIONS.map((option) => {
+                                                    const isSelected = formData.permissoes.includes(option.value)
+                                                    const isAdmin = formData.permissoes.includes("TODAS_AS_PERMISSOES")
+                                                    const isDisabled = isAdmin && option.value !== "TODAS_AS_PERMISSOES"
+
+                                                    return (
+                                                        <CommandItem
+                                                            key={option.value}
+                                                            value={option.label}
+                                                            onSelect={() => handlePermissionToggle(option.value)}
+                                                            disabled={isDisabled}
+                                                            className={cn(isDisabled && "opacity-50 cursor-not-allowed")}
+                                                        >
+                                                            <div className={cn(
+                                                                "mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary",
+                                                                isSelected ? "bg-primary text-primary-foreground" : "opacity-50 [&_svg]:invisible"
+                                                            )}>
+                                                                <Check className={cn("h-4 w-4")} />
+                                                            </div>
+                                                            <span>{option.label}</span>
+                                                        </CommandItem>
+                                                    )
+                                                })}
+                                            </CommandGroup>
+                                        </CommandList>
+                                    </Command>
+                                </PopoverContent>
+                            </Popover>
+                            {errors.permissoes && <span className="text-[10px] text-red-500 mt-1">{errors.permissoes}</span>}
                         </div>
                     </div>
                 </section>
@@ -410,7 +510,14 @@ export function CollaboratorForm({ collaboratorId }: CollaboratorFormProps) {
                             </label>
                         </div>
                         {profileImage && (
-                            <img src={profileImage} alt="Preview" className="w-12 h-12 rounded-full object-cover border border-gray-200" />
+                            <Image
+                                src={profileImage}
+                                alt="Preview"
+                                width={48}
+                                height={48}
+                                className="rounded-full object-cover border border-gray-200"
+                                unoptimized
+                            />
                         )}
                     </div>
                 </section>

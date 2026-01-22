@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextResponse } from 'next/server'
+import nodemailer from 'nodemailer'
 
 export async function GET() {
     try {
@@ -136,6 +137,47 @@ export async function POST(request: Request) {
         if (error) {
             console.error("Supabase Insert Error:", error)
             return NextResponse.json({ error: error.message }, { status: 500 })
+        }
+
+        try {
+            // Check if SMTP variables are set, otherwise log warning
+            if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+                const origin = new URL(request.url).origin
+
+                const { data: linkData, error: linkError } = await supabase.auth.admin.generateLink({
+                    type: 'recovery',
+                    email: body.email,
+                    options: {
+                        redirectTo: `${origin}/set-password`
+                    }
+                })
+
+                if (linkError) {
+                    console.error("Error generating password link:", linkError)
+                } else if (linkData?.properties?.action_link) {
+
+                    const transporter = nodemailer.createTransport({
+                        host: process.env.SMTP_HOST,
+                        port: Number(process.env.SMTP_PORT) || 587,
+                        secure: false, // true for 465, false for other ports
+                        auth: {
+                            user: process.env.SMTP_USER,
+                            pass: process.env.SMTP_PASS,
+                        },
+                    });
+
+                    await transporter.sendMail({
+                        from: process.env.SMTP_FROM || '"AgroBravo" <nao-responda@agrobravo.com.br>',
+                        to: body.email,
+                        subject: 'Defina sua senha da Agrobravo',
+                        html: `<p>Para definir sua primeira senha da AgroBravo, <a href="${linkData.properties.action_link}">clique aqui</a></p>`
+                    });
+                }
+            } else {
+                console.warn("SMTP settings are missing in .env.local. Skipping email dispatch.")
+            }
+        } catch (emailError) {
+            console.error("Failed to send welcome email:", emailError)
         }
 
         return NextResponse.json(data)
