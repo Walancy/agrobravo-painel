@@ -47,7 +47,7 @@ export function HeaderProfile() {
 
     return (
         <div className="flex items-center gap-4">
-            <div className="text-right hidden sm:block">
+            <div className="flex flex-col items-center hidden sm:flex">
                 <div className="text-sm font-semibold text-gray-900 leading-tight">{firstName}</div>
                 <div className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-blue-50 text-blue-600 border border-blue-100 mt-0.5">
                     {accessLevel}
