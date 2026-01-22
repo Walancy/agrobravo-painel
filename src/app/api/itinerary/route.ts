@@ -127,7 +127,7 @@ export async function POST(request: Request) {
 
         const supabase = createClient(supabaseUrl, supabaseKey)
         const body = await request.json()
-        console.log('API POST - Body:', JSON.stringify(body, null, 2));
+        // console.log('API POST - Body:', JSON.stringify(body, null, 2));
 
         const { groupId, ...eventData } = body;
 
@@ -163,7 +163,7 @@ export async function PUT(request: Request) {
 
         const supabase = createClient(supabaseUrl, supabaseKey)
         const body = await request.json()
-        console.log('API PUT - Body:', JSON.stringify(body, null, 2));
+        // console.log('API PUT - Body:', JSON.stringify(body, null, 2));
         const { id, ...updates } = body;
 
         if (!id) {

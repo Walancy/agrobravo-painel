@@ -750,7 +750,8 @@ export function FlightForm({
                         passengers: Object.entries(passengerAssignments)
                             .filter(([_, fId]) => fId === selectedFlightData.id)
                             .map(([pId]) => pId),
-                        hasTransfer: hasTransfer
+                        hasTransfer: hasTransfer,
+                        connections: selectedFlightData.connections
                     }
                     newEvents.push(flightEvent)
 

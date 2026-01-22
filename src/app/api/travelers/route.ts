@@ -31,7 +31,7 @@ export async function GET(request: Request) {
 
             const groupIds = groups?.map(g => g.id) || []
 
-            console.log(`Mission ${missionId} has ${groupIds.length} groups:`, groupIds)
+            // console.log(`Mission ${missionId} has ${groupIds.length} groups:`, groupIds)
 
             if (groupIds.length === 0) {
                 return NextResponse.json([])
@@ -70,7 +70,7 @@ export async function GET(request: Request) {
                 return NextResponse.json({ error: error.message }, { status: 500 })
             }
 
-            console.log(`Travelers API - missionId: ${missionId}, users found: ${users?.length || 0}`)
+            // console.log(`Travelers API - missionId: ${missionId}, users found: ${users?.length || 0}`)
 
             // Map and format the data for the frontend
             const formattedTravelers = users.map((user: any) => {
@@ -111,7 +111,7 @@ export async function GET(request: Request) {
                 }
             })
 
-            console.log('Formatted travelers:', formattedTravelers)
+            // console.log('Formatted travelers:', formattedTravelers)
 
             return NextResponse.json(formattedTravelers)
         }
@@ -169,8 +169,8 @@ export async function GET(request: Request) {
             return NextResponse.json({ error: error.message }, { status: 500 })
         }
 
-        console.log(`Travelers API - missionId: ${missionId}, users found: ${users?.length || 0}`)
-        console.log('Raw users data:', JSON.stringify(users, null, 2))
+        // console.log(`Travelers API - missionId: ${missionId}, users found: ${users?.length || 0}`)
+        // console.log('Raw users data:', JSON.stringify(users, null, 2))
 
         // Map and format the data for the frontend
         const formattedTravelers = users.map((user: any) => {
@@ -211,7 +211,7 @@ export async function GET(request: Request) {
             }
         })
 
-        console.log('Formatted travelers:', formattedTravelers)
+        // console.log('Formatted travelers:', formattedTravelers)
 
         return NextResponse.json(formattedTravelers)
     } catch (error: any) {

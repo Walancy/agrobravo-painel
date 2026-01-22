@@ -169,15 +169,23 @@ export function ParticipantsSelector({
                         {subtitle && <p className="text-xs text-gray-500">{subtitle}</p>}
                     </div>
 
-                    {/* Search */}
-                    <div className="relative">
-                        <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
-                        <Input
-                            placeholder="Buscar por nome ou grupo"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="h-8 pl-8 text-xs bg-gray-50 border-gray-200 rounded-lg shadow-none focus-visible:ring-1 focus-visible:ring-blue-600"
+                    {/* Search & Select All */}
+                    <div className="flex items-center gap-2">
+                        <Checkbox
+                            checked={allFilteredSelected}
+                            onCheckedChange={toggleAll}
+                            title="Selecionar todos filtrados"
+                            className="border-gray-300 data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600 w-4 h-4 rounded shrink-0"
                         />
+                        <div className="relative flex-1">
+                            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-gray-400" />
+                            <Input
+                                placeholder="Buscar por nome ou grupo"
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="h-8 pl-8 text-xs bg-gray-50 border-gray-200 rounded-lg shadow-none focus-visible:ring-1 focus-visible:ring-blue-600 w-full"
+                            />
+                        </div>
                     </div>
 
                     {/* Group Filter */}

@@ -31,6 +31,17 @@ export interface Event {
     referenceEventId?: string  // For return activities - references the original event
     transferDate?: string
     transferTime?: string
+    city?: string
+    country?: string
+    connections?: {
+        airline: string
+        flightNumber: string
+        origin: { code: string, time: string }
+        destination: { code: string, time: string }
+        duration: string
+        layoverDuration: string
+        planeType?: string
+    }[]
 }
 
 export interface DayItinerary {

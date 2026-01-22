@@ -28,8 +28,22 @@ interface AirportSelectorProps {
 
 export function AirportSelector({ value, onChange, placeholder = "Selecione um aeroporto..." }: AirportSelectorProps) {
     const [open, setOpen] = React.useState(false)
+    const [search, setSearch] = React.useState("")
 
     const selectedAirport = airports.find((airport) => airport.code.toLowerCase() === value.toLowerCase())
+
+    const filteredAirports = React.useMemo(() => {
+        if (!search) return airports.slice(0, 50)
+
+        const lowerSearch = search.toLowerCase()
+        return airports
+            .filter((airport) =>
+                airport.code.toLowerCase().includes(lowerSearch) ||
+                airport.city.toLowerCase().includes(lowerSearch) ||
+                airport.name.toLowerCase().includes(lowerSearch)
+            )
+            .slice(0, 50)
+    }, [search])
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -52,15 +66,21 @@ export function AirportSelector({ value, onChange, placeholder = "Selecione um a
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-[300px] p-0" align="start">
-                <Command>
-                    <CommandInput placeholder="Buscar aeroporto..." />
-                    <CommandList>
-                        <CommandEmpty>Nenhum aeroporto encontrado.</CommandEmpty>
+                <Command shouldFilter={false}>
+                    <CommandInput
+                        placeholder="Buscar aeroporto..."
+                        value={search}
+                        onValueChange={setSearch}
+                    />
+                    <CommandList onWheel={(e) => e.stopPropagation()}>
+                        {filteredAirports.length === 0 && (
+                            <CommandEmpty>Nenhum aeroporto encontrado.</CommandEmpty>
+                        )}
                         <CommandGroup>
-                            {airports.map((airport) => (
+                            {filteredAirports.map((airport) => (
                                 <CommandItem
                                     key={airport.code}
-                                    value={`${airport.code} ${airport.city} ${airport.name}`}
+                                    value={airport.code}
                                     onSelect={() => {
                                         onChange(airport.code.toLowerCase())
                                         setOpen(false)

@@ -62,6 +62,15 @@ export const formatTotalPrice = (price: string | undefined, passengers: any[] | 
     }).format(total);
 };
 
+export const formatCurrency = (value: number | string) => {
+    const num = typeof value === 'string' ? parseCurrency(value) : value;
+    return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+        maximumFractionDigits: 0
+    }).format(num);
+};
+
 // Helper to get totals by category
 export const getCategoryTotals = (events: Event[]) => {
     const totals: Record<string, number> = {};

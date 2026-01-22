@@ -33,6 +33,7 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
     const [isSwitchGroupOpen, setIsSwitchGroupOpen] = React.useState(false)
     const [activeTab, setActiveTab] = React.useState("itinerario")
     const financialTabRef = React.useRef<any>(null)
+    const itineraryTabRef = React.useRef<any>(null)
     const isNew = id === "new"
     const [alerts, setAlerts] = React.useState({ travelers: false, financial: false, itinerary: false, guides: false, quoting: false })
     const [viewMode, setViewMode] = React.useState<'list' | 'calendar'>('list')
@@ -520,7 +521,11 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
                                             >
                                                 {viewMode === 'list' ? <Calendar className="w-4 h-4" /> : <LayoutList className="w-4 h-4" />}
                                             </Button>
-                                            <Button variant="outline" className="rounded-lg border-blue-600 text-gray-700 hover:bg-blue-50 h-10 px-6">
+                                            <Button
+                                                variant="outline"
+                                                className="rounded-lg border-blue-600 text-gray-700 hover:bg-blue-50 h-10 px-6"
+                                                onClick={() => itineraryTabRef.current?.downloadPDF()}
+                                            >
                                                 Baixar planejamento
                                                 <Download className="ml-2 w-4 h-4" />
                                             </Button>
@@ -547,6 +552,11 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
                             startDate={group?.data_inicio}
                             endDate={group?.data_fim}
                             viewMode={viewMode}
+                            ref={itineraryTabRef}
+                            groupName={group?.nome}
+                            groupLogo={imageSrc}
+                            missionLogo={group?.missionLogo}
+                            travelersCount={groupData.stats.travelers}
                         />
                     </TabsContent>
                     <TabsContent value="guias" className="h-full mt-0 border-none p-0 data-[state=inactive]:hidden">

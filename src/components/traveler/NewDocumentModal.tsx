@@ -89,7 +89,7 @@ export function NewDocumentModal({ open, onOpenChange, onSave, initialFile, init
             const { data: { text } } = await worker.recognize(fileToProcess)
             await worker.terminate()
 
-            console.log("OCR Raw Text:", text)
+            // console.log("OCR Raw Text:", text)
             // ... (keep usage of text as needed, or improve extraction logic)
             // For now, we mainly extract date logic (simplified here for brevity as previously implemented)
 

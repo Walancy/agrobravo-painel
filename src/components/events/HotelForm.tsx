@@ -182,7 +182,25 @@ export default function HotelForm({
             })
             // Ensure we show the hotel card, not manual mode
             setIsManualMode(false)
-            if (initialData.location) setSearchLocation(initialData.location)
+
+            // Helper to check for URLs
+            const isUrl = (s: string) => s && (s.startsWith('http://') || s.startsWith('https://'));
+
+            // Only set searchLocation if it's NOT a URL
+            if (initialData.location && !isUrl(initialData.location)) {
+                setSearchLocation(initialData.location);
+            } else if (initialData.city) {
+                setSearchLocation(initialData.city);
+            } else {
+                // If legacy data had only URL, we leave searchLocation as default (São Paulo) or empty? 
+                // Defaulting to empty might be safer to prompt user input, or keep 'São Paulo, Brasil' default.
+                // Let's rely on the state's default 'São Paulo, Brasil' or maybe clear it if we want to force entry.
+                // For now, let's reset to '' if we detected a URL so the user sees they need to enter it.
+                if (initialData.location && isUrl(initialData.location)) {
+                    setSearchLocation('');
+                }
+            }
+
             if (initialData.date) setCheckInDate(initialData.date.replace(/\s/g, ''))
             if (initialData.endDate) {
                 setCheckOutDate(initialData.endDate.replace(/\s/g, ''))
@@ -272,7 +290,7 @@ export default function HotelForm({
                 const mockHotel = {
                     property_token: initialData.id,
                     name: initialData.title,
-                    location: initialData.location,
+                    location: !isUrl(initialData.location) ? initialData.location : (initialData.city || ''),
                     thumbnail: initialData.hotelData?.thumbnail || initialData.logos?.[0],
                     stars: 0,
                     overall_rating: initialData.hotelData?.rating || 0,
@@ -802,6 +820,11 @@ export default function HotelForm({
                                             if (selectedHotel) {
                                                 const events: any[] = [];
 
+                                                // Helper to ensure we have a valid text location
+                                                const cleanLocation = (selectedHotel.location && !selectedHotel.location.startsWith('http'))
+                                                    ? selectedHotel.location
+                                                    : (searchLocation || '');
+
                                                 // Create check-in event if selected
                                                 // Create hotel event (Check-in)
                                                 if (createCheckIn) {
@@ -823,7 +846,9 @@ export default function HotelForm({
                                                         title: selectedHotel.name,
                                                         subtitle: "Check-in",
                                                         price: costType === 'free' ? 'Sem custo' : (price || selectedHotel.rate_per_night?.lowest || selectedHotel.price || 'N/A'),
-                                                        location: selectedHotel.location || selectedHotel.link || '',
+                                                        location: cleanLocation,
+                                                        city: searchLocation || '',
+                                                        site_url: selectedHotel.link || (selectedHotel.location?.startsWith('http') ? selectedHotel.location : undefined),
                                                         status: costType as 'free' | 'confirmed' | 'quoting',
                                                         duration: "1 dia",
                                                         logos: selectedHotel.thumbnail ? [selectedHotel.thumbnail] : [],
@@ -864,7 +889,9 @@ export default function HotelForm({
                                                         title: selectedHotel.name,
                                                         subtitle: "Check-out",
                                                         price: '', // Check-out event should not have price to avoid double counting
-                                                        location: selectedHotel.location || selectedHotel.link || '',
+                                                        location: cleanLocation,
+                                                        city: searchLocation || '',
+                                                        site_url: selectedHotel.link || (selectedHotel.location?.startsWith('http') ? selectedHotel.location : undefined),
                                                         status: 'confirmed',
                                                         duration: "1 dia",
                                                         logos: selectedHotel.thumbnail ? [selectedHotel.thumbnail] : [],
@@ -894,7 +921,8 @@ export default function HotelForm({
                                                         type: 'transfer',
                                                         title: 'Transferência',
                                                         subtitle: 'Transporte',
-                                                        location: selectedHotel.location || selectedHotel.name,
+                                                        location: cleanLocation,
+                                                        city: searchLocation || '',
                                                         driver: 'David Príncipe',
                                                         duration: '1h 00 min',
                                                         logos: [],
@@ -912,7 +940,8 @@ export default function HotelForm({
                                                         type: 'transfer',
                                                         title: 'Transferência',
                                                         subtitle: 'Transporte',
-                                                        location: selectedHotel.location || selectedHotel.name,
+                                                        location: cleanLocation,
+                                                        city: searchLocation || '',
                                                         driver: 'David Príncipe',
                                                         duration: '1h 00 min',
                                                         logos: [],

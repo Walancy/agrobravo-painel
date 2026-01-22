@@ -55,7 +55,8 @@ export function useItineraryData({ groupId, isEmpty, startDate, endDate }: UseIt
                         site_url: dbEvent.site_url,
                         referenceEventId: dbEvent.evento_referencia_id,
                         transferDate: dbEvent.transfer_data,
-                        transferTime: dbEvent.transfer_hora
+                        transferTime: dbEvent.transfer_hora,
+                        connections: dbEvent.conexoes
                     }
 
                     const dateKey = dbEvent.data

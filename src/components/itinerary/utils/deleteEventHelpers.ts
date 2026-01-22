@@ -25,6 +25,37 @@ export async function deleteEventWithRelated(
     }
 }
 
+// Helper to normalize dates for comparison
+function normalizeDate(dateStr?: string): string {
+    if (!dateStr) return '';
+    const cleanStr = dateStr.replace(/\s/g, '');
+    if (cleanStr.includes('/')) return cleanStr.split('/').reverse().join('-');
+    return cleanStr;
+}
+
+// Helper to find a transfer event
+function findTransferEvent(itinerary: any[], targetDate: string | undefined, targetTime: string | undefined, fallbackDate: string): { event: Event, dayIndex: number } | null {
+    if (!targetTime) return null;
+
+    const searchDate = normalizeDate(targetDate || fallbackDate);
+
+    for (let i = 0; i < itinerary.length; i++) {
+        const day = itinerary[i];
+        const dayDate = normalizeDate(day.date);
+
+        if (dayDate !== searchDate) continue;
+
+        // Try to find transfer by exact time first
+        const found = day.events.find((e: Event) =>
+            e.type === 'transfer' &&
+            e.time === targetTime
+        );
+
+        if (found) return { event: found, dayIndex: i };
+    }
+    return null;
+}
+
 async function handleFlightDeletion(
     flight: Event,
     dayEvents: Event[],
@@ -63,26 +94,27 @@ async function handleHotelDeletion(
 
                     // Also delete the transfer of the paired event if it exists
                     if (event.hasTransfer) {
-                        const pairedTransfer = day.events.find((e: Event) =>
-                            e.type === 'transfer' && e.time === event.time
-                        )
-                        if (pairedTransfer) {
-                            allRelatedEvents.push({ dayIndex: dayIdx, eventId: pairedTransfer.id })
+                        const transferTime = event.transferTime || event.time
+                        const transferDate = event.transferDate || event.date
+
+                        // Use day.date as fallback because event.date might be missing in some contexts
+                        const result = findTransferEvent(itinerary, transferDate, transferTime, day.date);
+                        if (result) {
+                            allRelatedEvents.push({ dayIndex: result.dayIndex, eventId: result.event.id })
                         }
                     }
                 }
             }
 
-            // Find associated transfers (legacy check, might be redundant with above but keeps safety)
+            // Find associated transfers (legacy check for same-title transfers not linked by structure)
             if (event.type === 'transfer' && event.title === 'Transferência') {
                 const hotelEvent = day.events.find((e: Event) =>
                     e.type === 'hotel' &&
                     e.title === hotelTitle &&
                     e.hasTransfer &&
-                    e.time === event.time &&
-                    e.id !== deletedEventId // Ensure we don't double count if we already found it via the paired logic
+                    ((e.transferTime && e.transferTime === event.time) || (!e.transferTime && e.time === event.time)) &&
+                    e.id !== deletedEventId
                 )
-                // Only add if not already added (simple check)
                 if (hotelEvent && !allRelatedEvents.some(r => r.eventId === event.id)) {
                     allRelatedEvents.push({ dayIndex: dayIdx, eventId: event.id })
                 }
@@ -92,21 +124,23 @@ async function handleHotelDeletion(
 
     // Delete all related events
     for (const relatedEvent of allRelatedEvents) {
+        // Prevent double deletion calls if ID matches multiple times
         await itineraryService.deleteEvent(relatedEvent.eventId)
     }
 
     // Delete transfer of the currently deleted event if exists
     if (hotel.hasTransfer) {
-        const dayEvents = itinerary.find((_, idx) =>
-            itinerary[idx].events.some((e: Event) => e.id === deletedEventId)
-        )?.events || []
+        const transferTime = hotel.transferTime || hotel.time
+        const transferDate = hotel.transferDate || hotel.date
 
-        const associatedTransfer = dayEvents.find((e: Event) =>
-            e.type === 'transfer' && e.time === hotel.time
-        )
+        // Find the day that contains the deleted event to get the correct date fallback
+        const dayContainingHotel = itinerary.find(d => d.events.some((e: Event) => e.id === deletedEventId));
+        const fallbackDate = dayContainingHotel?.date || hotel.date || '';
 
-        if (associatedTransfer) {
-            await itineraryService.deleteEvent(associatedTransfer.id)
+        const result = findTransferEvent(itinerary, transferDate, transferTime, fallbackDate);
+
+        if (result && !allRelatedEvents.some(r => r.eventId === result.event.id)) {
+            await itineraryService.deleteEvent(result.event.id)
         }
     }
 }
@@ -212,5 +246,6 @@ async function handleTransferDeletion(
         await itineraryService.updateEvent(associatedVisit.id, {
             possui_transfer: false
         })
+        return
     }
 }

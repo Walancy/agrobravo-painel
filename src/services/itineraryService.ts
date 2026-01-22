@@ -33,6 +33,7 @@ export type ItineraryEvent = {
     evento_referencia_id?: string
     transfer_data?: string
     transfer_hora?: string
+    conexoes?: any[]
 }
 
 export const itineraryService = {

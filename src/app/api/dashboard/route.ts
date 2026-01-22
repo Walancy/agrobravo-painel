@@ -3,12 +3,12 @@ import { createClient } from '@/lib/supabase/server'
 
 export async function GET() {
     try {
-        console.log('Dashboard API: Starting fetch...')
+        // console.log('Dashboard API: Starting fetch...')
         const supabase = await createClient()
         const today = new Date().toISOString().split('T')[0]
 
         // 1. Get groups in progress
-        console.log('Dashboard API: Fetching groups...')
+        // console.log('Dashboard API: Fetching groups...')
         const { data: groups, error: groupsError } = await supabase
             .from('grupos')
             .select(`
@@ -32,14 +32,14 @@ export async function GET() {
             console.error('Dashboard API: Groups error:', groupsError)
             throw groupsError
         }
-        console.log(`Dashboard API: Found ${groups?.length || 0} groups`)
+        // console.log(`Dashboard API: Found ${groups?.length || 0} groups`)
 
         // 2. Get upcoming events for these groups
         const groupIds = groups?.map(g => g.id) || []
 
         let allEvents: any[] = []
         if (groupIds.length > 0) {
-            console.log('Dashboard API: Fetching events for groups:', groupIds)
+            // console.log('Dashboard API: Fetching events for groups:', groupIds)
             const { data: events, error: eventsError } = await supabase
                 .from('itinerario_eventos')
                 .select(`
@@ -73,7 +73,7 @@ export async function GET() {
                 throw eventsError
             }
             allEvents = events || []
-            console.log(`Dashboard API: Found ${allEvents.length} events`)
+            // console.log(`Dashboard API: Found ${allEvents.length} events`)
         }
 
         // 3. Process events
@@ -134,7 +134,7 @@ export async function GET() {
 
         // ALWAYS include mock data if no real groups are found, to ensure UI is visible
         if (upcomingEvents.length === 0) {
-            console.log('Dashboard API: No real events found, adding mock data')
+            // console.log('Dashboard API: No real events found, adding mock data')
             upcomingEvents = [
                 {
                     id: 'mock-1',
@@ -273,7 +273,7 @@ export async function GET() {
             calendar_events: calendarEvents
         }
 
-        console.log('Dashboard API: Success, returning data')
+        // console.log('Dashboard API: Success, returning data')
         return NextResponse.json(dashboardData)
     } catch (error) {
         console.error('Dashboard API: Global error:', error)

@@ -30,6 +30,7 @@ interface EventData {
     evento_referencia_id?: string
     transfer_data?: string
     transfer_hora?: string
+    conexoes?: any[]
 }
 
 export function mapEventToDatabase(event: Event, groupId: string, dayDate: string): EventData {
@@ -66,7 +67,8 @@ export function mapEventToDatabase(event: Event, groupId: string, dayDate: strin
         transfer_data: event.transferDate
             ? (event.transferDate.replace(/\s/g, '').includes('/') ? event.transferDate.replace(/\s/g, '').split('/').reverse().join('-') : event.transferDate.replace(/\s/g, ''))
             : undefined,
-        transfer_hora: event.transferTime
+        transfer_hora: event.transferTime,
+        conexoes: event.connections
     }
 }
 
