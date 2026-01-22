@@ -19,6 +19,7 @@ export type Mission = {
     custo_cotado?: number | null
     custo_atingido?: number | null
     destino?: string | null // Computed from paises?
+    groups_count?: number
 }
 
 const API_URL = '/api/missions';

@@ -153,17 +153,27 @@ export function MissionsList() {
         {
             accessorKey: "custo_cotado",
             header: "Custo cotado",
-            cell: ({ row }) => <span className="text-gray-900 font-medium">{row.getValue("custo_cotado") ? `R$ ${row.getValue("custo_cotado")}` : "-"}</span>,
+            cell: ({ row }) => {
+                const value = row.getValue("custo_cotado") as number;
+                return <span className="text-gray-900 font-medium">
+                    {value ? value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : "R$ 0,00"}
+                </span>
+            },
         },
         {
             accessorKey: "custo_atingido",
             header: "Custo atingido",
-            cell: ({ row }) => <span className="text-gray-900 font-medium">{row.getValue("custo_atingido") ? `R$ ${row.getValue("custo_atingido")}` : "-"}</span>,
+            cell: ({ row }) => {
+                const value = row.getValue("custo_atingido") as number;
+                return <span className="text-gray-900 font-medium">
+                    {value ? value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : "R$ 0,00"}
+                </span>
+            },
         },
         {
-            id: "groups", // Placeholder for groups count if we had it
+            id: "groups",
             header: ({ column }) => <div className="text-center">Grupos</div>,
-            cell: ({ row }) => <div className="text-center text-gray-900 font-medium">-</div>,
+            cell: ({ row }) => <div className="text-center text-gray-900 font-medium">{row.original.groups_count || 0}</div>,
         },
         {
             accessorKey: "status",

@@ -40,6 +40,7 @@ export type MissionGroup = {
     }
     missionName?: string // Flattened for easier display
     missionLogo?: string | null
+    events_count?: number
 }
 
 const API_URL = '/api/mission-groups';
@@ -114,6 +115,7 @@ function processGroups(groups: any[]): MissionGroup[] {
         custo_atingido: g.custo_atingido ?? 0,
         next_event: g.next_event || null,
         missionName: g.missoes?.nome || 'Sem missão',
-        missionLogo: g.missoes?.logo || null
+        missionLogo: g.missoes?.logo || null,
+        events_count: g.events_count ?? 0
     }));
 }

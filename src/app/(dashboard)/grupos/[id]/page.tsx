@@ -7,17 +7,20 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { GroupGuidesTab } from "@/components/group/GroupGuidesTab"
-import { GroupTravelersTab } from "@/components/group/GroupTravelersTab"
-import { GroupNotificationsTab } from "@/components/group/GroupNotificationsTab"
-import { GroupFinancialTab } from "@/components/group/GroupFinancialTab"
-import { GroupMaterialsTab } from "@/components/group/GroupMaterialsTab"
-import { SwitchGroupModal } from "@/components/group/SwitchGroupModal"
-import { GroupItineraryTab } from "@/components/itinerary/GroupItineraryTab"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useLayout } from "@/context/LayoutContext"
+import dynamic from "next/dynamic"
+
+// Lazy load tab components
+const GroupGuidesTab = dynamic(() => import("@/components/group/GroupGuidesTab").then(mod => mod.GroupGuidesTab), { ssr: false })
+const GroupTravelersTab = dynamic(() => import("@/components/group/GroupTravelersTab").then(mod => mod.GroupTravelersTab), { ssr: false })
+const GroupNotificationsTab = dynamic(() => import("@/components/group/GroupNotificationsTab").then(mod => mod.GroupNotificationsTab), { ssr: false })
+const GroupFinancialTab = dynamic(() => import("@/components/group/GroupFinancialTab").then(mod => mod.GroupFinancialTab), { ssr: false })
+const GroupMaterialsTab = dynamic(() => import("@/components/group/GroupMaterialsTab").then(mod => mod.GroupMaterialsTab), { ssr: false })
+const GroupItineraryTab = dynamic(() => import("@/components/itinerary/GroupItineraryTab").then(mod => mod.GroupItineraryTab), { ssr: false })
+const SwitchGroupModal = dynamic(() => import("@/components/group/SwitchGroupModal").then(mod => mod.SwitchGroupModal), { ssr: false })
 
 export default function GroupDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = React.use(params)
@@ -108,8 +111,7 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
             stats: {
                 travelers: group.participants_count || 0, // Using virtual field from service
                 guides: group.guides_count || 0,
-                cities: 0,  // Mocked for now
-                visits: 0
+                events: group.events_count || 0
             }
         }
     }, [group])
@@ -443,17 +445,9 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
                                     <div className="flex flex-col items-center gap-1">
                                         <div className="flex items-center gap-2 text-gray-900 text-sm font-bold">
                                             <Map className="w-4 h-4 text-blue-600" />
-                                            Cidades
+                                            Eventos
                                         </div>
-                                        <span className="text-2xl font-normal text-gray-500">{groupData.stats.cities}</span>
-                                    </div>
-                                    <div className="w-px h-10 bg-gray-200" />
-                                    <div className="flex flex-col items-center gap-1">
-                                        <div className="flex items-center gap-2 text-gray-900 text-sm font-bold">
-                                            <MapPinned className="w-4 h-4 text-blue-600" />
-                                            Visitas
-                                        </div>
-                                        <span className="text-2xl font-normal text-gray-500">{groupData.stats.visits}</span>
+                                        <span className="text-2xl font-normal text-gray-500">{groupData.stats.events}</span>
                                     </div>
                                 </div>
                             </div>
@@ -544,7 +538,7 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
 
                 {/* Content Area */}
                 <div className="flex-1 min-h-0">
-                    <TabsContent value="itinerario" forceMount={true} className="h-full mt-0 border-none p-0 data-[state=inactive]:hidden">
+                    <TabsContent value="itinerario" className="h-full mt-0 border-none p-0 data-[state=inactive]:hidden">
                         <GroupItineraryTab
                             isEmpty={isNew}
                             onConflictChange={handleItineraryAlert}
@@ -555,16 +549,16 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
                             viewMode={viewMode}
                         />
                     </TabsContent>
-                    <TabsContent value="guias" forceMount={true} className="h-full mt-0 border-none p-0 data-[state=inactive]:hidden">
+                    <TabsContent value="guias" className="h-full mt-0 border-none p-0 data-[state=inactive]:hidden">
                         <GroupGuidesTab groupId={id} onAlertChange={handleGuidesAlert} />
                     </TabsContent>
-                    <TabsContent value="viajantes" forceMount={true} className="h-full mt-0 border-none p-0 data-[state=inactive]:hidden">
+                    <TabsContent value="viajantes" className="h-full mt-0 border-none p-0 data-[state=inactive]:hidden">
                         <GroupTravelersTab groupId={id} vacancies={group?.vagas || 0} isEmpty={isNew} onAlertChange={handleTravelersAlert} />
                     </TabsContent>
-                    <TabsContent value="notificacoes" forceMount={true} className="h-full mt-0 border-none p-0 data-[state=inactive]:hidden">
+                    <TabsContent value="notificacoes" className="h-full mt-0 border-none p-0 data-[state=inactive]:hidden">
                         <GroupNotificationsTab isEmpty={isNew} missionId={group?.missao_id} groupId={id} />
                     </TabsContent>
-                    <TabsContent value="financeiro" forceMount={true} className="h-full mt-0 border-none p-0 data-[state=inactive]:hidden">
+                    <TabsContent value="financeiro" className="h-full mt-0 border-none p-0 data-[state=inactive]:hidden">
                         <GroupFinancialTab
                             isEmpty={isNew}
                             groupId={id}
@@ -575,7 +569,7 @@ export default function GroupDetailsPage({ params }: { params: Promise<{ id: str
                             activeTab={activeTab}
                         />
                     </TabsContent>
-                    <TabsContent value="materiais" forceMount={true} className="h-full mt-0 border-none p-0 data-[state=inactive]:hidden">
+                    <TabsContent value="materiais" className="h-full mt-0 border-none p-0 data-[state=inactive]:hidden">
                         <GroupMaterialsTab isEmpty={isNew} groupId={id} />
                     </TabsContent>
                 </div>
